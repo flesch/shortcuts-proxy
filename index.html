@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+</head>
+<body>
+<script>
+try {
+  const { name, ...input } = Object.fromEntries(new URLSearchParams(window.location.search.slice(1)));
+  window.location.href = `shortcuts://run-shortcut?name=${encodeURIComponent(name)}&input=text&text=${encodeURIComponent(
+    btoa(JSON.stringify(input))
+  )}`;
+} catch(err) {
+  alert(err);
+}
+</script>
+</body>
+</html>
