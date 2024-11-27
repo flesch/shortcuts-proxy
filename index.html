@@ -7,9 +7,13 @@
 <script>
 try {
   const { name, ...input } = Object.fromEntries(new URLSearchParams(window.location.search.slice(1)));
-  window.location.href = `shortcuts://run-shortcut?name=${encodeURIComponent(name)}&input=text&text=${encodeURIComponent(
-    btoa(JSON.stringify(input))
-  )}`;
+  if (name) {
+    window.location.href = `shortcuts://run-shortcut?name=${encodeURIComponent(name)}&input=text&text=${encodeURIComponent(
+      btoa(JSON.stringify(input))
+    )}`;
+  } else {
+    window.location.href = "shortcuts://";
+  }
 } catch(err) {
   alert(err);
 }
