@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+</head>
+<body>
+<pre><!-- × --></pre>
+<script>
+try {
+  const [ path, name, ...extra ] = window.location.pathname.slice(1).split("/");
+  const input = Object.fromEntries(new URLSearchParams(window.location.search.slice(1)));
+
+  if ((path === "run-shortcut" || path === "run" || path === "×") && name) {
+    window.location.href = `shortcuts://run-shortcut?name=${encodeURIComponent(name)}&input=text&text=${encodeURIComponent(
+      btoa(JSON.stringify({ ...input, extra }))
+    )}`;
+  } else if (path === "create-shortcut" || path === "new") {
+    window.location.href = "shortcuts://create-shortcut";
+  } else {
+    document.addEventListener("DOMContentLoaded", (event) => {
+      const pre = document.querySelector("pre");
+      const content = document.createTextNode(JSON.stringify({ path, name, input, extra }, null, 2));
+      pre.appendChild(content);
+    });
+  }
+} catch(err) {
+  alert(err);
+}
+</script>
+</body>
+</html>
