@@ -18,11 +18,12 @@ try {
     });
   } else {
     if ((path === "run-shortcut" || path === "run" || path === "×") && name) {
-      window.location.href = `shortcuts://run-shortcut?name=${encodeURIComponent(name)}&input=text&text=${encodeURIComponent(
+      window.location.href = `shortcuts://run-shortcut?name=${name}&input=text&text=${encodeURIComponent(
         btoa(JSON.stringify({ ...input, extra }))
       )}`;
     } else if (path === "create-shortcut" || path === "new") {
-      window.location.href = "shortcuts://create-shortcut";
+      // window.location.href = "shortcuts://create-shortcut";
+      window.location.href = "shortcuts://run-shortcut?name=Create%20Shortcut";
     } else {
       window.location.href = "shortcuts://";
     }
