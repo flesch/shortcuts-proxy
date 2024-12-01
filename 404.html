@@ -7,7 +7,7 @@
 <pre><!-- × --></pre>
 <script>
 try {
-  const [ path, name, ...extra ] = window.location.pathname.slice(1).split("/");
+  const [ root, path, name, ...extra ] = window.location.pathname.slice(1).split("/");
   const input = Object.fromEntries(new URLSearchParams(window.location.search.slice(1)));
 
   if ((path === "run-shortcut" || path === "run" || path === "×") && name) {
@@ -19,7 +19,7 @@ try {
   } else {
     document.addEventListener("DOMContentLoaded", (event) => {
       const pre = document.querySelector("pre");
-      const content = document.createTextNode(JSON.stringify({ path, name, input, extra }, null, 2));
+      const content = document.createTextNode(JSON.stringify({ root, path, name, input, extra }, null, 2));
       pre.appendChild(content);
     });
   }
