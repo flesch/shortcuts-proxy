@@ -8,20 +8,24 @@
 <script>
 try {
   const [ root, path, name, ...extra ] = window.location.pathname.slice(1).split("/");
-  const input = Object.fromEntries(new URLSearchParams(window.location.search.slice(1)));
-
-  if ((path === "run-shortcut" || path === "run" || path === "×") && name) {
-    window.location.href = `shortcuts://run-shortcut?name=${encodeURIComponent(name)}&input=text&text=${encodeURIComponent(
-      btoa(JSON.stringify({ ...input, extra }))
-    )}`;
-  } else if (path === "create-shortcut" || path === "new") {
-    window.location.href = "shortcuts://create-shortcut";
-  } else {
+  const { debug, ...input } = Object.fromEntries(new URLSearchParams(window.location.search.slice(1)));
+  
+  if (debug) {
     document.addEventListener("DOMContentLoaded", (event) => {
       const pre = document.querySelector("pre");
       const content = document.createTextNode(JSON.stringify({ root, path, name, input, extra }, null, 2));
       pre.appendChild(content);
     });
+  } else {
+    if ((path === "run-shortcut" || path === "run" || path === "×") && name) {
+      window.location.href = `shortcuts://run-shortcut?name=${encodeURIComponent(name)}&input=text&text=${encodeURIComponent(
+        btoa(JSON.stringify({ ...input, extra }))
+      )}`;
+    } else if (path === "create-shortcut" || path === "new") {
+      window.location.href = "shortcuts://create-shortcut";
+    } else {
+      window.location.href = "shortcuts://";
+    }
   }
 } catch(err) {
   alert(err);
